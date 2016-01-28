@@ -1,12 +1,15 @@
 package com.ymw.action.b;
 
-import java.util.Date;
 
 import com.opensymphony.xwork2.Action;
 import com.ymw.action.RootAction;
-import com.ymw.model.Easybuy_user;
 
 public class IndexAction extends RootAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2615172391421450581L;
+
 	@Override
 	public String execute() throws Exception {
 		return Action.SUCCESS;

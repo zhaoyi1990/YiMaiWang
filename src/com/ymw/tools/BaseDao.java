@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -135,7 +134,7 @@ public class BaseDao {
 		Class<? extends Object> clazz = object.getClass();
 		// Ð´SQLÓï¾ä
 		StringBuffer sql = new StringBuffer();
-		sql.append("delete " + clazz.getSimpleName() + " where ");
+		sql.append("delete from `" + clazz.getSimpleName() + "` where ");
 		Field[] fields = clazz.getDeclaredFields();
 		List<Field> fs = new ArrayList<Field>();
 		for (Field f : fields) {
@@ -151,10 +150,10 @@ public class BaseDao {
 			}
 		}
 		for (Field f : fs) {
-			sql.append(f.getName() + "=? and ");
+			sql.append("`"+f.getName() + "`=? and ");
 		}
 		sql.delete(sql.length() - 5, sql.length());
-
+		System.out.println(sql);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -187,10 +186,10 @@ public class BaseDao {
 		Class<? extends Object> clazz = object.getClass();
 		// Ð´SQLÓï¾ä
 		StringBuffer sql = new StringBuffer();
-		sql.append("update " + clazz.getSimpleName() + " set ");
+		sql.append("update `" + clazz.getSimpleName() + "` set ");
 		Field[] fields = clazz.getDeclaredFields();
 		for (int i = 0; i < fields.length; i++) {
-			sql.append(fields[i].getName() + "=?");
+			sql.append("`"+fields[i].getName() + "`=?");
 			if (i < fields.length - 1) {
 				sql.append(',');
 			}

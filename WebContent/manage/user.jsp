@@ -7,6 +7,7 @@
 <title>后台管理 - 易买网</title>
 <link type="text/css" rel="stylesheet" href="../css/style.css" />
 <script type="text/javascript" src="../scripts/function-manage.js"></script>
+<script type="text/javascript" src="../scripts/jquery.js"></script>
 </head>
 <body>
 <div id="header" class="wrap">
@@ -36,7 +37,7 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
+				<dd><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
 				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
 				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
@@ -53,24 +54,29 @@
 		<h2>用户管理</h2>
 		<div class="manage">
 			<table class="list">
-				<tr>
-					<th>ID</th>
-					<th>姓名</th>
-					<th>性别</th>
-					<th>Email</th>
-					<th>手机</th>
-					<th>操作</th>
-				</tr>
-				<s:iterator value="list">
+				<thead>
 					<tr>
-						<td class="first w4 c"><s:property value="eu_user_id-1"/></td>
-						<td class="w1 c"><s:property value="eu_name"/></td>
-						<td class="w2 c"><s:property value="eu_sex==1?'男':'女'"/></td>
-						<td><s:property value="eu_email"/></td>
-						<td class="w4 c"><s:property value="eu_mobile"/></td>
-						<td class="w1 c"><a href="user-modify.html">修改</a> <a href="javascript:Delete(1);">删除</a></td>
+						<th>ID</th>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>Email</th>
+						<th>手机</th>
+						<th>操作</th>
 					</tr>
-				</s:iterator>
+				</thead>
+				<tbody id="tb1">
+					<s:iterator value="list">
+						<tr>
+							<td class="first w4 c"><s:property value="eu_user_id-1"/></td>
+							<td class="w1 c"><s:property value="eu_name"/></td>
+							<td class="w2 c"><s:property value="eu_sex==1?'男':'女'"/></td>
+							<td><s:property value="eu_email"/></td>
+							<td class="w4 c"><s:property value="eu_mobile"/></td>
+							<td class="w1 c"><s:a href="user_modify.do?id=%{eu_user_id}" >修改</s:a> 
+							<s:a href="javascript:Delete(%{eu_user_id})" >删除</s:a></td>
+						</tr>
+					</s:iterator>
+				</tbody>
 			</table>
 		</div>
 	</div>

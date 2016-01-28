@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.ymw.dao.UserDao;
 import com.ymw.model.Easybuy_user;
-import com.ymw.tools.BaseDao;
 import com.ymw.tools.Pages;
 
 

@@ -31,4 +31,24 @@ public class UserDao {
 	public void add(Easybuy_user user){
 		dao.add(user);
 	}
+	
+	//id查询对象
+	public Easybuy_user queryById(Integer id){
+		List<Easybuy_user> list = dao.query(Easybuy_user.class, "eu_user_id="+id);
+		if(list!=null&&list.size()==1){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
+	// 更新用户星系
+	public void update(Easybuy_user user) {
+		dao.update(user, "eu_user_id="+user.getEu_user_id());
+	}
+
+	public void delete(Integer id) {
+		Easybuy_user user = new Easybuy_user();
+		user.setEu_user_id(id);
+		dao.delete(user);
+	}
 }

@@ -9,11 +9,6 @@
 <link type="text/css" rel="stylesheet" href="../css/style.css" />
 <script type="text/javascript" src="../scripts/function-manage.js"></script>
 <script type="text/javascript" src="../scripts/jquery.js"></script>
-<script type="text/javascript">
-$(function(){
-	setDay();
-});
-</script>
 </head>
 <body>
 <div id="header" class="wrap">
@@ -22,7 +17,7 @@ $(function(){
 	<div class="navbar">
 		<ul class="clearfix">
 			<li><a href="index.html">首页</a></li>
-			<li class="current"><a href="user.jsp">用户</a></li>
+			<li class="current"><a href="user.html">用户</a></li>
 			<li><a href="product.html">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
@@ -57,64 +52,84 @@ $(function(){
 		</div>
 	</div>
 	<div class="main">
-		<h2>新增用户</h2>
+		<h2>修改用户</h2>
 		<div class="manage">
-			<form action="user_add.do" method="post">
+			<form action="user_update.do" method="post">
 				<table class="form">
 					<tr>
 						<td class="field">用户名：</td>
-						<td><input type="text" class="text" name="user.eu_user_name" value="" /></td>
+						<td><input type="text" class="text" name="user.eu_user_name" value="<s:property value='user.eu_user_name'/>"/></td>
 					</tr>
 					<tr>
 						<td class="field">姓名：</td>
-						<td><input type="text" class="text" name="user.eu_name" value="" /></td>
+						<td><input type="text" class="text" name="user.eu_name" value="<s:property value='user.eu_name'/>" /></td>
 					</tr>
 					<tr>
 						<td class="field">密码：</td>
-						<td><input type="text" class="text" name="user.eu_password" value="" /></td>
+						<td><input  type="text" class="text" name="user.eu_password" value="<s:property value='user.eu_password'/>" /></td>
 					</tr>
 					<tr>
 						<td class="field">性别：</td>
 						<td>
-							<input type="radio" name="user.eu_sex" value="1" checked="checked" />男 
-							<input type="radio" name="user.eu_sex" value="2" />女
+							<s:if test="user.eu_sex==1">
+								<input type="radio" name="user.eu_sex" value="1" checked="checked" />男 
+								<input type="radio" name="user.eu_sex" value="2" />女
+							</s:if><s:else>
+								<input type="radio" name="user.eu_sex" value="1" />男 
+								<input type="radio" name="user.eu_sex" value="2"  checked="checked"  />女
+							</s:else>
 						</td>
 					</tr>
 					<tr>
 						<td class="field">出生日期：</td>
 						<td>
 							<select name="year" id="year" onchange="setDay()">
-								<c:forEach begin="1970" end="2016" step="1" var="i">
-									<option value="${i}">${i}</option>
-								</c:forEach>
+								<s:iterator begin="1970" end="2016" step="1" var="i">
+									<s:if test="year==#i">
+										<option value="${i}" selected="selected">${i}</option>
+									</s:if><s:else>
+										<option value="${i}">${i}</option>
+									</s:else>
+								</s:iterator>
 							</select>年
 							<select name="month" id="month"  onchange="setDay()">
-								<c:forEach begin="1" end="12" step="1" var="i">
-									<option value="${i}">${i}</option>
-								</c:forEach>
+								<s:iterator begin="1" end="12" step="1" var="i">
+									<s:if test="month==#i">
+										<option value="${i}" selected="selected">${i}</option>
+									</s:if><s:else>
+										<option value="${i}">${i}</option>
+									</s:else>
+								</s:iterator>
 							</select>月
 							<select name="day" id="day">
+								<s:iterator begin="1" end="max" step="1" var="i">
+									<s:if test="day==#i">
+										<option value="${i}" selected="selected">${i}</option>
+									</s:if><s:else>
+										<option value="${i}">${i}</option>
+									</s:else>
+								</s:iterator>
 							</select>日
 						</td>
 					</tr>
 					<tr>
 						<td class="field">身份证号：</td>
-						<td><input type="text" class="text" name="user.eu_identity_code" value="" /></td>
+						<td><input type="text" class="text" name="user.eu_identity_code" value="<s:property value='user.eu_identity_code'/>" /></td>
 					</tr>
 					<tr>
 						<td class="field">电子邮箱：</td>
-						<td><input type="text" class="text" name="user.eu_email" value="" /></td>
+						<td><input type="text" class="text" name="user.eu_email" value="<s:property value='user.eu_email'/>" /></td>
 					</tr>
 					<tr>
 						<td class="field">手机号码：</td>
-						<td><input type="text" class="text" name="user.eu_mobile" value="" /></td>
+						<td><input type="text" class="text" name="user.eu_mobile" value="<s:property value='user.eu_mobile'/>" /></td>
 					</tr>
 					<tr>
 						<td class="field">送货地址：</td>
-						<td><input type="text" class="text" name="user.eu_address" value="" /></td>
+						<td><input type="text" class="text" name="user.eu_address" value="<s:property value='user.eu_address'/>" /></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td><input type="hidden" name="user.eu_user_id" value="<s:property value='user.eu_user_id'/>"></td>
 						<td><label class="ui-blue"><input type="submit" name="submit" value="添加" /></label></td>
 					</tr>
 				</table>
