@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="b_struts" namespace="/manage" extends="struts-default">
+		<action name="index" class="com.ymw.action.b.IndexAction">
+			<result name="success">index.jsp</result>
+		</action>
+		<action name="user" class="com.ymw.action.b.UserAction">
+			<result name="success">user.jsp</result>
+		</action>
+		<action name="user_*" class="com.ymw.action.b.UserAction" method="{1}">
+			<result name="modify">user-modify.jsp</result>
+			<result name="success" type="redirect">user.jsp</result>
+		</action>
+		<action name="*">
+			<result>{1}.jsp</result>
+		</action>
+	</package>
+</struts>    
