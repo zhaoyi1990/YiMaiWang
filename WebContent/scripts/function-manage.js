@@ -1,21 +1,21 @@
 // JavaScript Document
-function Delete(id)
-{
-	$.post("user_delete.do",{id:id},function(list){
-		$('#tb1').children().remove();
-		$.each(list,function(i,user){
-			$('#tb1').append("<tr>")
-			.append("<td class='first w4 c'>"+(user.eu_user_id-1)+"</td>")
-			.append("<td class='w1 c'>"+user.eu_name+"</td>")
-			.append("<td class='w2 c'>"+(user.eu_sex==1?'男':'女')+"</td>")
-			.append("<td>"+user.eu_email+"</td>")
-			.append("<td class='w4 c'>"+user.eu_mobile+"</td>")
-			.append("<td class='w1 c'><a href='user_modify.do?id="+user.eu_user_id+"' >修改</a> " +
-					"<a href='javascript:Delete("+user.eu_user_id+")' >删除</a></td>")
-			.append("</tr>")
-		})
-	},"json")
-}
+//function Delete(id)
+//{
+//	$.post("user_delete.do",{id:id},function(list){
+//		$('#tb1').children().remove();
+//		$.each(list,function(i,user){
+//			$('#tb1').append("<tr>")
+//			.append("<td class='first w4 c'>"+(user.eu_user_id-1)+"</td>")
+//			.append("<td class='w1 c'>"+user.eu_name+"</td>")
+//			.append("<td class='w2 c'>"+(user.eu_sex==1?'男':'女')+"</td>")
+//			.append("<td>"+user.eu_email+"</td>")
+//			.append("<td class='w4 c'>"+user.eu_mobile+"</td>")
+//			.append("<td class='w1 c'><a href='user_modify.do?id="+user.eu_user_id+"' >修改</a> " +
+//					"<a href='javascript:Delete("+user.eu_user_id+")' >删除</a></td>")
+//			.append("</tr>")
+//		})
+//	},"json")
+//}
 function setDay(){
 	var	year= $('#year').val();
 	var	month= $('#month').val();

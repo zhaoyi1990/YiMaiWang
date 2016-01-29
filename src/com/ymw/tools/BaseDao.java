@@ -63,8 +63,9 @@ public class BaseDao {
 	}
 
 	// ≤Â»Î
-	public void add(Object object) {
+	public int add(Object object) {
 		Class<? extends Object> clazz = object.getClass();
+		int result = 0;
 		// –¥SQL”Ôæ‰
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into ");
@@ -115,9 +116,7 @@ public class BaseDao {
 				}
 				ps.setObject(i + 1, value);
 			}
-			if (ps.executeUpdate() > 0) {
-				System.out.println("≤Â»Î≥…π¶");
-			}
+			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -127,6 +126,7 @@ public class BaseDao {
 		} finally {
 			close(conn, ps, null);
 		}
+		return result;
 	}
 
 	// …æ≥˝

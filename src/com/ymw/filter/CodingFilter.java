@@ -1,7 +1,6 @@
 package com.ymw.filter;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,7 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ymw.model.Easybuy_user;
 
 /**
  * Servlet Filter implementation class AdminFilter

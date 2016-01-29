@@ -12,10 +12,10 @@
 <body>
 <div id="header" class="wrap">
 	<div id="logo"><img src="../images/logo.gif" /></div>
-	<div class="help"><a href="../index.html">返回前台页面</a></div>
+	<div class="help"><a href="../index.jsp">返回前台页面</a></div>
 	<div class="navbar">
 		<ul class="clearfix">
-			<li><a href="index.html">首页</a></li>
+			<li><a href="index.jsp">首页</a></li>
 			<li class="current"><a href="user.jsp">用户</a></li>
 			<li><a href="product.html">商品</a></li>
 			<li><a href="order.html">订单</a></li>
@@ -30,7 +30,7 @@
 	</div>
 </div>
 <div id="position" class="wrap">
-	您现在的位置：<a href="index.html">易买网</a> &gt; 管理后台
+	您现在的位置：<a href="index.jsp">易买网</a> &gt; 管理后台
 </div>
 <div id="main" class="wrap">
 	<div id="menu-mng" class="lefter">
@@ -73,9 +73,17 @@
 							<td><s:property value="eu_email"/></td>
 							<td class="w4 c"><s:property value="eu_mobile"/></td>
 							<td class="w1 c"><s:a href="user_modify.do?id=%{eu_user_id}" >修改</s:a> 
-							<s:a href="javascript:Delete(%{eu_user_id})" >删除</s:a></td>
+							<s:a href="user_delete.do?id=%{eu_user_id}&pages.currentPage=%{pages.currentPage}" >删除</s:a></td>
 						</tr>
 					</s:iterator>
+					<tr>
+						<td colspan="6" style="text-align: center;">
+							<s:a href="user.jsp?pages.currentPage=1">首页</s:a>
+							<s:a href="user.jsp?pages.currentPage=%{pages.pageUp}">上一页</s:a>
+							<s:a href="user.jsp?pages.currentPage=%{pages.pageDown}">下一页</s:a>
+							<s:a href="user.jsp?pages.currentPage=%{pages.pageCount}">最后页</s:a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

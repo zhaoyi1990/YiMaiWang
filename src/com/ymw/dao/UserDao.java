@@ -8,10 +8,12 @@ import com.ymw.tools.Pages;
 
 public class UserDao {
 	private BaseDao dao = new BaseDao();
-	//验证用户账号密码
+
+	// 验证用户账号密码
 	public boolean login(Easybuy_user user) {
-		BaseDao dao = new BaseDao();
-		List<Easybuy_user> list = dao.query(Easybuy_user.class, "EU_USER_NAME='" + user.getEu_user_name() + "'");
+		List<Easybuy_user> list = dao.query(Easybuy_user.class, 
+				"EU_USER_NAME='" + user.getEu_user_name() + "'",
+				"EU_PASSWORD+'" + user.getEu_password() + "'");
 		if (list != null && list.size() == 1) {
 			Easybuy_user user2 = list.get(0);
 			user.setEu_user_id(user2.getEu_user_id());
@@ -22,28 +24,35 @@ public class UserDao {
 			return false;
 		}
 	}
-	
-	public List<Easybuy_user> query(Pages pages){
-		List<Easybuy_user> list = dao.query(Easybuy_user.class, pages,"eu_status=1");
+
+	// 验证用户名重复
+	public Integer reg(String username) {
+		List<Easybuy_user> list = dao.query(Easybuy_user.class, "EU_USER_NAME='" + username + "'");
+		return list.size();
+	}
+
+	public List<Easybuy_user> query(Pages pages) {
+		List<Easybuy_user> list = dao.query(Easybuy_user.class, pages, "eu_status=1");
 		return list;
 	}
-	
-	public void add(Easybuy_user user){
-		dao.add(user);
+
+	public int add(Easybuy_user user) {
+		return dao.add(user);
 	}
-	
-	//id查询对象
-	public Easybuy_user queryById(Integer id){
-		List<Easybuy_user> list = dao.query(Easybuy_user.class, "eu_user_id="+id);
-		if(list!=null&&list.size()==1){
+
+	// id查询对象
+	public Easybuy_user queryById(Integer id) {
+		List<Easybuy_user> list = dao.query(Easybuy_user.class, "eu_user_id=" + id);
+		if (list != null && list.size() == 1) {
 			return list.get(0);
-		}else{
+		} else {
 			return null;
 		}
 	}
-	// 更新用户星系
+
+	// 更新用户信息
 	public void update(Easybuy_user user) {
-		dao.update(user, "eu_user_id="+user.getEu_user_id());
+		dao.update(user, "eu_user_id=" + user.getEu_user_id());
 	}
 
 	public void delete(Integer id) {

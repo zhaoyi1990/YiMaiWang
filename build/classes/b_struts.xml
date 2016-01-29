@@ -11,7 +11,7 @@
 		</action>
 		<action name="user_*" class="com.ymw.action.b.UserAction" method="{1}">
 			<result name="modify">user-modify.jsp</result>
-			<result name="success" type="redirect">user.jsp</result>
+			<result name="success">user.jsp</result>
 		</action>
 		<action name="*">
 			<result>{1}.jsp</result>

@@ -1,7 +1,5 @@
 package com.ymw.action.b;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,17 +13,25 @@ import com.ymw.dao.UserDao;
 import com.ymw.model.Easybuy_user;
 import com.ymw.tools.Pages;
 
-import net.sf.json.JSONArray;
 
 @SuppressWarnings("serial")
 public class UserAction extends RootAction {
-	private List<Easybuy_user> list = new ArrayList<Easybuy_user>();
+	private List<Easybuy_user> list;
 	private Easybuy_user user;
 	private Integer year;
 	private Integer month;
 	private Integer day;
 	private Integer max;
-	private UserDao dao = new UserDao();
+	private UserDao dao;
+	private Pages pages;
+	
+	
+	public UserAction() {
+		list = new ArrayList<Easybuy_user>();
+		dao = new UserDao();
+		pages = new Pages("Easybuy_user", 10);
+		pages.setTotalRow(pages.getTotalRow()-1);
+	}
 
 	public Integer getYear() {
 		return year;
@@ -75,34 +81,22 @@ public class UserAction extends RootAction {
 		this.list = list;
 	}
 
-	@Override
-	public String execute() throws Exception {
+	public Pages getPages() {
+		return pages;
+	}
 
-		Pages pages = new Pages("easybuy_user", 10);
-		String s = request.getParameter("page");
-		pages.setCurrentPage(Integer.parseInt(s == null ? "1" : s));
+	public void setPages(Pages pages) {
+		this.pages = pages;
+	}
+
+	@Override
+	public String execute(){
+		pages.setCurrentPage(pages.getCurrentPage());
 		list = dao.query(pages);
 		return Action.SUCCESS;
 	}
-	// public String add(){
-	// Integer year = Integer.parseInt(request.getParameter("year"));
-	// Integer month = Integer.parseInt(request.getParameter("month"));
-	// Integer day = Integer.parseInt(request.getParameter("day"));
-	//
-	// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	// Date date = null;
-	// try {
-	// date = sdf.parse(String.format("%d%02d%02d", year,month,day));
-	// } catch (ParseException e) {
-	// e.printStackTrace();
-	// }
-	// user.setEu_birthday(date);
-	//
-	// dao.add(user);
-	//
-	// return Action.SUCCESS;
-	// }
-
+	
+	//修改页面默认数据
 	public String modify() {
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		user = dao.queryById(id);
@@ -122,20 +116,17 @@ public class UserAction extends RootAction {
 				max = 28;
 			}
 			break;
-		case 4:
-		case 6:
-		case 9:
-		case 11:
+		case 4:case 6:case 9:case 11:
 			max = 30;
 			break;
 		default:
 			max = 31;
 			break;
 		}
-
 		return "modify";
 	}
 
+	//更新数据
 	public String update() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = null;
@@ -147,26 +138,13 @@ public class UserAction extends RootAction {
 		user.setEu_birthday(date);
 		user.setEu_status(1);
 		dao.update(user);
-		return Action.SUCCESS;
+		return execute();
 	}
 
-	public void delete() {
+	public String delete() {
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		dao.delete(id);
-		Pages pages = new Pages("easybuy_user", 10);
-		String s = request.getParameter("page");
-		pages.setCurrentPage(Integer.parseInt(s == null ? "1" : s));
-		list = dao.query(pages);
-		JSONArray json = JSONArray.fromObject(list);
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-			out.println(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (out != null)
-				out.close();
-		}
+		pages.delete();
+		return execute();
 	}
 }

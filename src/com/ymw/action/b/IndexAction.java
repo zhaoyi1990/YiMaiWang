@@ -11,7 +11,7 @@ public class IndexAction extends RootAction {
 	private static final long serialVersionUID = -2615172391421450581L;
 
 	@Override
-	public String execute() throws Exception {
+	public String execute(){
 		return Action.SUCCESS;
 	}
 }

@@ -1,6 +1,5 @@
 package com.ymw.tools;
 
-
 public class Pages {
 	private Integer totalRow; // 总行数
 	private Integer pageRow; // 每页行数
@@ -21,13 +20,28 @@ public class Pages {
 	public Integer getPageCount() {
 		return pageCount;
 	}
-	
+
 	public Integer getPageRow() {
 		return pageRow;
 	}
 
+	public Integer getTotalRow() {
+		return totalRow;
+	}
+
+	public void setTotalRow(Integer totalRow) {
+		this.totalRow = totalRow;
+	}
+
 	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage;
+		this.pageCount = totalRow % pageRow == 0 ? totalRow / pageRow : totalRow / pageRow + 1;
+		if (currentPage == null) {
+			this.currentPage = 1;
+		} else if (currentPage > this.pageCount) {
+			this.currentPage = this.pageCount;
+		} else {
+			this.currentPage = currentPage;
+		}
 	}
 
 	// 当前页第一行
@@ -42,7 +56,7 @@ public class Pages {
 
 	// 查询总行数
 	private Integer queryTotalRow(String tableName) {
-		String sql = "select count(*) from `" +tableName+"`";
+		String sql = "select count(*) from `" + tableName + "`";
 		Object[] obj = new BaseDao().queryObject(sql);
 		if (obj.length == 1) {
 			return ((Long) obj[0]).intValue();
@@ -50,13 +64,28 @@ public class Pages {
 			return 0;
 		}
 	}
-	
-	//上一页
-	public Integer getPageUp(){
-		return currentPage>1?currentPage-1:1;
+
+	// 上一页
+	public Integer getPageUp() {
+		return currentPage > 1 ? currentPage - 1 : 1;
 	}
-	//下一页
-	public Integer getPageDown(){
-		return currentPage<pageCount?currentPage+1:pageCount;
+
+	// 下一页
+	public Integer getPageDown() {
+		return currentPage < pageCount ? currentPage + 1 : pageCount;
+	}
+
+	@Override
+	public String toString() {
+		return "Pages [totalRow=" + totalRow + ", pageRow=" + pageRow + ", pageCount=" + pageCount + ", currentPage="
+				+ currentPage + "]";
+	}
+
+	public void delete() {
+		totalRow--;
+		if(totalRow % pageRow == 0){
+			pageCount--;
+		}
+		
 	}
 }

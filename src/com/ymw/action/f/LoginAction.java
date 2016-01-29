@@ -22,7 +22,7 @@ public class LoginAction extends RootAction {
 	}
 
 	@Override
-	public String execute() throws Exception {
+	public String execute(){
 		UserDao dao = new UserDao();
 		if (dao.login(user)) {
 			session.setAttribute("user", user);
@@ -32,7 +32,8 @@ public class LoginAction extends RootAction {
 				return Action.SUCCESS;
 			}
 		} else {
-			return "fail";
+			request.setAttribute("error", "您输入的用户名或密码错误，请重新输入。");
+			return Action.ERROR;
 		}
 	}
 }

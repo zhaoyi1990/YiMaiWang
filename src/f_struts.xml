@@ -7,7 +7,12 @@
 		<action name="loginAction" class="com.ymw.action.f.LoginAction">
 			<result name="manage" type="redirect">manage/index.jsp</result>
 			<result name="success">index.jsp</result>
-			<result name="fail">fail.jsp</result>
+			<result name="error">login.jsp</result>
+		</action>
+		
+		<action name="reg_*" class="com.ymw.action.f.RegAction" method="{1}">
+			<result name="success">reg-result.html</result>
+			<result name="error">register.jsp</result>
 		</action>
 
 		<action name="*">
