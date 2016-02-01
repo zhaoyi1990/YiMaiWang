@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Servlet Filter implementation class AdminFilter
+ * ±àÂë¸ñÊ½¹ıÂËÆ÷
  */
 public class CodingFilter implements Filter {
 

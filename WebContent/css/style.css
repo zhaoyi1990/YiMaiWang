@@ -9,6 +9,8 @@ label.ui-green { background:#98c286; border:1px solid #3b6e22; }
 label.ui-green input { background:#68a54c; }
 label.ui-blue { background:#8a9cc2; border:1px solid #29447e; }
 label.ui-blue input { background:#5e77aa; }
+label.ui-blue a { background:#5e77aa; }
+#a_delete{display:block;width:46px;height:22px; text-align: center;color: #ffffff; text-decoration: none;}
 ul { list-style:none; }
 a:link, a:visited { color:#3a52a8; text-decoration:none; }
 a:hover, a:active { color:#3a52a8; text-decoration:underline; }
@@ -198,3 +200,5 @@ ul.product li dl dd.price { color:#c30; font-weight:bold; }
 #menu-mng dl dd{ margin:5px auto; }
 #menu-mng dl dd a { display:block; }
 #menu-mng em { float:right; padding:0 5px; font-style:normal; }
+
+.product_category_table{width: 100%;font-weight: bold;border-collapse:separate;text-align: center;}

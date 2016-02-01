@@ -1,4 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,7 +17,7 @@
 		<ul class="clearfix">
 			<li><a href="index.jsp">首页</a></li>
 			<li><a href="user.jsp">用户</a></li>
-			<li class="current"><a href="product.html">商品</a></li>
+			<li class="current"><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
 			<li><a href="news.html">新闻</a></li>
@@ -23,7 +26,7 @@
 </div>
 <div id="childNav">
 	<div class="welcome wrap">
-		管理员pillys您好，今天是2012-12-21，欢迎回到管理后台。
+		管理员${sessionScope.user.eu_name}您好，今天是<s:date name="#request.today" format="yyyy-MM-dd"/>，欢迎回到管理后台。
 	</div>
 </div>
 <div id="position" class="wrap">
@@ -34,10 +37,10 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
+				<dd><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass_add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product_add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
@@ -50,21 +53,37 @@
 	<div class="main">
 		<h2>商品管理</h2>
 		<div class="manage">
+			<table border="1" class="product_category_table"style="background-color: #dddddd;">
+				<tr>
+					<td><s:a href="#">全部商品</s:a></td>
+					<s:iterator value="plist">
+						<td><s:a href="product.jsp?pid=%{epc_id}">${epc_name}</s:a></td>
+					</s:iterator>
+				</tr>
+			</table>
 			<table class="list">
 				<tr>
 					<th>ID</th>
 					<th>商品名称</th>
 					<th>操作</th>
 				</tr>
+				<s:iterator value="list">
+					<tr>
+						<td class="first w4 c">${ep_id}</td>
+						<td class="thumb">
+							<img src="../images/product/${ep_file_name}" style="width: 56px; height: 56px;"/>
+							<a href="../product-view.html" target="_blank">${ep_name}</a>
+						</td>
+						<td class="w1 c"><a href="product-modify.html" >修改</a> <a href="javascript:Delete(1);">删除</a></td>
+					</tr>
+				</s:iterator>
 				<tr>
-					<td class="first w4 c">1</td>
-					<td class="thumb"><img src="../images/product/0_tiny.gif" /><a href="../product-view.html" target="_blank">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-					<td class="w1 c"><a href="product-modify.html">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="thumb"><img src="../images/product/0_tiny.gif" /><a href="../product-view.html" target="_blank">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-					<td class="w1 c"><a href="product-modify.html">修改</a> <a href="javascript:Delete(1);">删除</a></td>
+					<td colspan="3" style="text-align: center;font-weight: bold;">
+						<s:a href="product.jsp?pages.currentPage=1">首页</s:a>
+						<s:a href="product.jsp?pages.currentPage=%{pages.pageUp}">上一页</s:a>
+						<s:a href="product.jsp?pages.currentPage=%{pages.pageDown}">下一页</s:a>
+						<s:a href="product.jsp?pages.currentPage=%{pages.pageCount}">最后页</s:a>
+					</td>
 				</tr>
 			</table>
 		</div>

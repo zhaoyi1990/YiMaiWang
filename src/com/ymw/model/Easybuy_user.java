@@ -1,7 +1,9 @@
 package com.ymw.model;
 
 import java.util.Date;
-
+/**
+ * ”√ªß
+ * */
 public class Easybuy_user {
 	private Integer eu_user_id;
 	private String eu_user_name;

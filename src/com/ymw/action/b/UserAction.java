@@ -89,6 +89,9 @@ public class UserAction extends RootAction {
 		this.pages = pages;
 	}
 
+	//========================================上面是注入方法====下面是应用方法===============================================//
+
+	//用户管理主页面
 	@Override
 	public String execute(){
 		pages.setCurrentPage(pages.getCurrentPage());
@@ -96,10 +99,9 @@ public class UserAction extends RootAction {
 		return Action.SUCCESS;
 	}
 	
-	//修改页面默认数据
+	//用户资料修改页面数据
 	public String modify() {
-		Integer id = Integer.parseInt(request.getParameter("id"));
-		user = dao.queryById(id);
+		user = dao.queryById(user.getEu_user_id());
 		Calendar c = Calendar.getInstance();
 		if (user.getEu_birthday() != null) {
 			c.setTime(user.getEu_birthday());
@@ -126,7 +128,7 @@ public class UserAction extends RootAction {
 		return "modify";
 	}
 
-	//更新数据
+	//更新用户资料
 	public String update() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = null;
@@ -140,10 +142,10 @@ public class UserAction extends RootAction {
 		dao.update(user);
 		return execute();
 	}
-
+	
+	//删除用户资料
 	public String delete() {
-		Integer id = Integer.parseInt(request.getParameter("id"));
-		dao.delete(id);
+		dao.delete(user.getEu_user_id());
 		pages.delete();
 		return execute();
 	}

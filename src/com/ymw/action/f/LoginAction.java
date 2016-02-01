@@ -20,7 +20,10 @@ public class LoginAction extends RootAction {
 	public void setUser(Easybuy_user user) {
 		this.user = user;
 	}
+	
+	//========================================上面是注入方法====下面是应用方法===============================================//
 
+	//登陆验证
 	@Override
 	public String execute(){
 		UserDao dao = new UserDao();

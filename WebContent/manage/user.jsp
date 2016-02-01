@@ -17,7 +17,7 @@
 		<ul class="clearfix">
 			<li><a href="index.jsp">首页</a></li>
 			<li class="current"><a href="user.jsp">用户</a></li>
-			<li><a href="product.html">商品</a></li>
+			<li><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
 			<li><a href="news.html">新闻</a></li>
@@ -39,8 +39,8 @@
 				<dt>用户管理</dt>
 				<dd><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass_add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product_add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
@@ -67,13 +67,13 @@
 				<tbody id="tb1">
 					<s:iterator value="list">
 						<tr>
-							<td class="first w4 c"><s:property value="eu_user_id-1"/></td>
-							<td class="w1 c"><s:property value="eu_name"/></td>
-							<td class="w2 c"><s:property value="eu_sex==1?'男':'女'"/></td>
-							<td><s:property value="eu_email"/></td>
-							<td class="w4 c"><s:property value="eu_mobile"/></td>
-							<td class="w1 c"><s:a href="user_modify.do?id=%{eu_user_id}" >修改</s:a> 
-							<s:a href="user_delete.do?id=%{eu_user_id}&pages.currentPage=%{pages.currentPage}" >删除</s:a></td>
+							<td class="first w4 c">${eu_user_id-1}</td>
+							<td class="w1 c">${eu_name}</td>
+							<td class="w2 c">${eu_sex==1?'男':'女'}</td>
+							<td>${eu_email}</td>
+							<td class="w4 c">${eu_mobile}</td>
+							<td class="w1 c"><s:a href="user_modify.do?user.eu_user_id=%{eu_user_id}" >修改</s:a> 
+							<s:a href="user_delete.do?user.eu_user_id=%{eu_user_id}&pages.currentPage=%{pages.currentPage}" >删除</s:a></td>
 						</tr>
 					</s:iterator>
 					<tr>

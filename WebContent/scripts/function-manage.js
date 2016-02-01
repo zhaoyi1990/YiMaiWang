@@ -40,3 +40,16 @@ function setDay(){
 		$("#day").append(option);
 	}
 }
+
+function clist(obj){
+	var pid = obj.value;
+	$.post("product_clist.do",{pid:pid},function(clist){
+		$("#product_clist").children().remove();
+		$.each(clist,function(i,epc){
+			var option = document.createElement("option");
+			option.value=epc.epc_id;
+			option.innerHTML=epc.epc_name;
+			$("#product_clist").append(option);
+		})
+	},"json")
+}

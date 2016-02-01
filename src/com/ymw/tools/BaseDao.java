@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * MySQ jdbc封装
+ * */
 public class BaseDao {
 	private static String driver;
 	private static String url;
@@ -37,7 +40,7 @@ public class BaseDao {
 		}
 	}
 
-	// 打开连接
+	/** 打开连接*/ 
 	private Connection open() {
 		Connection conn = null;
 		try {
@@ -48,7 +51,7 @@ public class BaseDao {
 		return conn;
 	}
 
-	// 关闭连接
+	/** 关闭连接*/ 
 	private void close(Connection conn, PreparedStatement ps, ResultSet rs) {
 		try {
 			if (rs != null)
@@ -62,7 +65,7 @@ public class BaseDao {
 		}
 	}
 
-	// 插入
+	/** 对象插入数据*/  
 	public int add(Object object) {
 		Class<? extends Object> clazz = object.getClass();
 		int result = 0;
@@ -74,7 +77,8 @@ public class BaseDao {
 		// 连接字段
 		sql.append("(");
 		Field[] fields = clazz.getDeclaredFields();
-		List<Field> fs = new ArrayList<Field>();
+		List<Field> fs = new ArrayList<Field>(); 
+		//剔除值为null的字段
 		for (Field f : fields) {
 			f.setAccessible(true);
 			try {
@@ -111,7 +115,7 @@ public class BaseDao {
 			ps = conn.prepareStatement(sql.toString());
 			for (int i = 0; i < fs.size(); i++) {
 				Object value = fs.get(i).get(object);
-				if (value instanceof java.util.Date) {
+				if (value instanceof java.util.Date) { //util.Date转成sql.Date
 					value = new java.sql.Date(((java.util.Date) value).getTime());
 				}
 				ps.setObject(i + 1, value);
@@ -129,14 +133,17 @@ public class BaseDao {
 		return result;
 	}
 
-	// 删除
-	public void delete(Object object) {
+	/** 删除对象对应的数据
+	 *  */ 
+	public int delete(Object object) {
 		Class<? extends Object> clazz = object.getClass();
+		int r=0;
 		// 写SQL语句
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from `" + clazz.getSimpleName() + "` where ");
 		Field[] fields = clazz.getDeclaredFields();
 		List<Field> fs = new ArrayList<Field>();
+		//剔除值为空的字段
 		for (Field f : fields) {
 			f.setAccessible(true);
 			try {
@@ -160,15 +167,13 @@ public class BaseDao {
 			conn = open();
 			ps = conn.prepareStatement(sql.toString());
 			for (int i = 0; i < fs.size(); i++) {
-				Object value = fields[i].get(object);
-				if (value instanceof java.util.Date) {
+				Object value = fs.get(i).get(object);
+				if (value instanceof java.util.Date) {//util.Date转成sql.Date
 					value = new java.sql.Date(((java.util.Date) value).getTime());
 				}
 				ps.setObject(i + 1, value);
 			}
-			if (ps.executeUpdate() > 0) {
-				System.out.println("删除成功");
-			}
+			r = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -178,10 +183,10 @@ public class BaseDao {
 		} finally {
 			close(conn, ps, null);
 		}
-
+		return r;
 	}
 
-	// 修改
+	/** 修改*/ 
 	public void update(Object object, String... where) {
 		Class<? extends Object> clazz = object.getClass();
 		// 写SQL语句
@@ -212,7 +217,7 @@ public class BaseDao {
 			for (int i = 0; i < fields.length; i++) {
 				fields[i].setAccessible(true);
 				Object value = fields[i].get(object);
-				if (value instanceof java.util.Date) {
+				if (value instanceof java.util.Date) { //util.Date转成sql.Date
 					value = new java.sql.Date(((java.util.Date) value).getTime());
 				}
 				ps.setObject(i + 1, value);
@@ -231,7 +236,7 @@ public class BaseDao {
 		}
 	}
 
-	// 用类对象查询
+	/** 用类对象查询*/ 
 	public <T> List<T> query(Class<T> clazz,String... where) {
 		List<T> list = new ArrayList<T>();
 		// 写sql语句
@@ -259,6 +264,7 @@ public class BaseDao {
 				for (Field f : fields) {
 					f.setAccessible(true);
 					Object value = rs.getObject(f.getName());
+					//数据库类型转换java类型
 					f.set(obj, TypeConversion(value));
 				}
 				list.add(obj);
@@ -275,7 +281,7 @@ public class BaseDao {
 		return list;
 	}
 	
-	// 用类对象分页查询
+	/** 用类对象分页查询*/ 
 	public <T> List<T> query(Class<T> clazz,Pages pages,String... where) {
 		List<T> list = new ArrayList<T>();
 		StringBuffer sb = new StringBuffer();
@@ -339,7 +345,7 @@ public class BaseDao {
 		}
 	}
 
-	// 用sql语句查询
+	/** 用sql语句查询*/ 
 	public List<Object[]> queryListObject(String sql) {
 		List<Object[]> list = new ArrayList<Object[]>();
 		Connection conn = null;
@@ -365,7 +371,7 @@ public class BaseDao {
 		return list;
 	}
 
-	// 用sql语句查询单个对象
+	/** 用sql语句查询单个对象*/ 
 	public Object[] queryObject(String sql) {
 		List<Object[]> list = queryListObject(sql);
 		Object[] objects = null;

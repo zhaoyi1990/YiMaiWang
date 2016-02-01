@@ -1,4 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,32 +14,32 @@
 	<div class="help"><a href="../index.html">返回前台页面</a></div>
 	<div class="navbar">
 		<ul class="clearfix">
-			<li><a href="index.html">首页</a></li>
-			<li><a href="user.html">用户</a></li>
-			<li><a href="product.html">商品</a></li>
+			<li><a href="index.jsp">首页</a></li>
+			<li><a href="user.jsp">用户</a></li>
+			<li class="current"><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
-			<li class="current"><a href="news.html">新闻</a></li>
+			<li><a href="news.html">新闻</a></li>
 		</ul>
 	</div>
 </div>
 <div id="childNav">
 	<div class="welcome wrap">
-		管理员pillys您好，今天是2012-12-21，欢迎回到管理后台。
+		管理员${sessionScope.user.eu_name}您好，今天是<s:date name="#request.today" format="yyyy-MM-dd"/>，欢迎回到管理后台。
 	</div>
 </div>
 <div id="position" class="wrap">
-	您现在的位置：<a href="index.html">易买网</a> &gt; 管理后台
+	您现在的位置：<a href="index.jsp">易买网</a> &gt; 管理后台
 </div>
 <div id="main" class="wrap">
 	<div id="menu-mng" class="lefter">
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.html">新增</a></em><a href="user.html">用户管理</a></dd>
+				<dd><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product_add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
@@ -48,17 +50,24 @@
 		</div>
 	</div>
 	<div class="main">
-		<h2>添加新闻</h2>
+		<h2>添加分类</h2>
 		<div class="manage">
-			<form action="manage-result.html">
+			<form action="productClass_insert.do" method="post">
 				<table class="form">
 					<tr>
-						<td class="field">新闻标题：</td>
-						<td><input type="text" class="text" name="title" value="" /></td>
+						<td class="field">父分类：</td>
+						<td>
+							<select name="epc.epc_parent_id">
+								<option value="0" selected="selected">根栏目</option>
+								<s:iterator value="list">
+									<option value='<s:property value="epc_id"/>'><s:property value="epc_name"/></option>
+								</s:iterator>
+							</select>
+						</td>
 					</tr>
 					<tr>
-						<td class="field">新闻内容：</td>
-						<td><textarea name="content"></textarea></td>
+						<td class="field">分类名称：</td>
+						<td><input type="text" class="text" name="epc.epc_name" value="" /></td>
 					</tr>
 					<tr>
 						<td></td>

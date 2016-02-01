@@ -28,7 +28,10 @@ public class RegAction extends RootAction {
 	public void setUser(Easybuy_user user) {
 		this.user = user;
 	}
-
+	
+	//========================================上面是注入方法====下面是应用方法===============================================//
+	
+	//用户添加
 	public String add() {
 		Integer year = Integer.parseInt(request.getParameter("year"));
 		Integer month = Integer.parseInt(request.getParameter("month"));

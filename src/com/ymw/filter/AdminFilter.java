@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ymw.model.Easybuy_user;
 
 /**
- * Servlet Filter implementation class AdminFilter
+ * 管理员权限过滤器
  */
 public class AdminFilter implements Filter {
 

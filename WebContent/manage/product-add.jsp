@@ -1,11 +1,14 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>后台管理 - 易买网</title>
 <link type="text/css" rel="stylesheet" href="../css/style.css" />
 <script type="text/javascript" src="../scripts/function-manage.js"></script>
+<script type="text/javascript" src="../scripts/jquery.js"></script>
+
 </head>
 <body>
 <div id="header" class="wrap">
@@ -24,7 +27,7 @@
 </div>
 <div id="childNav">
 	<div class="welcome wrap">
-		管理员pillys您好，今天是2012-12-21，欢迎回到管理后台。
+		管理员${sessionScope.user.eu_name}您好，今天是<s:date name="#request.today" format="yyyy-MM-dd"/>，欢迎回到管理后台。
 	</div>
 </div>
 <div id="position" class="wrap">
@@ -35,10 +38,10 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
+				<dd><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass_add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product_add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
@@ -51,44 +54,46 @@
 	<div class="main">
 		<h2>添加商品</h2>
 		<div class="manage">
-			<form action="manage-result.html">
+			<form action="product_insert.do" method="post" enctype="multipart/form-data">
 				<table class="form">
 					<tr>
 						<td class="field">商品名称：</td>
-						<td><input type="text" class="text" name="productName" value="铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机" /></td>
+						<td><input type="text" class="text" name="product.ep_name" value="铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机" /></td>
 					</tr>
 					<tr>
 						<td class="field">所属分类：</td>
 						<td>
-							<select name="parentId">
-								<option value="1">电器</option>
-								<option value="3">├ 电器</option>
-								<option value="3">└ 电器</option>
-								<option value="2">衣服</option>
-								<option value="3">├ 电器</option>
-								<option value="3">└ 电器</option>
+							<select name="product.epc_id" onchange="clist(this)">
+								<s:iterator value="plist">
+									<option value="<s:property value="epc_id"/>">${epc_name}</option>
+								</s:iterator>
+							</select>
+							<select name="product.epc_child_id" id="product_clist">
+								<s:iterator value="clist">
+									<option value="<s:property value="epc_id"/>">${epc_name}</option>
+								</s:iterator>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="field">商品图片：</td>
-						<td><input type="file" class="text" name="photo" /></td>
+						<td><input type="file" class="text" name="file"/></td>
 					</tr>
 					<tr>
 						<td class="field">商品价格：</td>
-						<td><input type="text" class="text tiny" name="productPrice" /> 元</td>
+						<td><input type="text" class="text tiny" name="product.ep_price" /> 元</td>
 					</tr>
 					<tr>
 						<td class="field">品牌：</td>
-						<td><input type="text" class="text" name="productName" /></td>
-					</tr>
+						<td><input type="text" class="text" name="product.ep_brand" /></td>
+					</tr>                                                                  
 					<tr>
 						<td class="field">库存：</td>
-						<td><input type="text" class="text tiny" name="productName" /></td>
+						<td><input type="text" class="text tiny" name="product.ep_stock" /></td>
 					</tr>
 					<tr>
 						<td class="field">条码号：</td>
-						<td><input type="text" class="text" name="productName" /></td>
+						<td><input type="text" class="text" name="product.ep_bar_code" /></td>
 					</tr>
 					<tr>
 						<td></td>
