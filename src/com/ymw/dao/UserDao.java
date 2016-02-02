@@ -53,14 +53,12 @@ public class UserDao {
 	}
 
 	/** 更新用户信息*/ 
-	public void update(Easybuy_user user) {
-		dao.update(user, "eu_user_id=" + user.getEu_user_id());
+	public int update(Easybuy_user user) {
+		return dao.update(user, "eu_user_id=" + user.getEu_user_id());
 	}
 	
 	/** 删除一条用户数据*/
-	public void delete(Integer id) {
-		Easybuy_user user = new Easybuy_user();
-		user.setEu_user_id(id);
-		dao.delete(user);
+	public int delete(Easybuy_user user) {
+		return dao.delete(user);
 	}
 }

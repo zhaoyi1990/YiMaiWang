@@ -28,6 +28,15 @@
 			<result name="success">product.jsp</result>
 		</action>
 		
+		<action name="news" class="com.ymw.action.b.NewsAction">
+			<result name="success">news.jsp</result>
+		</action>
+		<action name="news_*" class="com.ymw.action.b.NewsAction" method="{1}" >
+			<result name="{1}">news-{1}.jsp</result>
+			<result name="success">news.jsp</result>
+		</action>
+
+		
 		<action name="*">
 			<result>{1}.jsp</result>
 		</action>

@@ -21,7 +21,7 @@
 			<li class="current"><a href="product.html">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
-			<li><a href="news.html">新闻</a></li>
+			<li><a href="news.jsp">新闻</a></li>
 		</ul>
 	</div>
 </div>
@@ -47,7 +47,7 @@
 				<dt>留言管理</dt>
 				<dd><a href="guestbook.html">留言管理</a></dd>
 				<dt>新闻管理</dt>
-				<dd><em><a href="news-add.html">新增</a></em><a href="news.html">新闻管理</a></dd>
+				<dd><em><a href="news-add.jsp">新增</a></em><a href="news.jsp">新闻管理</a></dd>
 			</dl>
 		</div>
 	</div>
@@ -58,7 +58,7 @@
 				<table class="form">
 					<tr>
 						<td class="field">商品名称：</td>
-						<td><input type="text" class="text" name="product.ep_name" value="铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机" /></td>
+						<td><input type="text" class="text" name="product.ep_name" value="" /></td>
 					</tr>
 					<tr>
 						<td class="field">所属分类：</td>
@@ -77,7 +77,13 @@
 					</tr>
 					<tr>
 						<td class="field">商品图片：</td>
-						<td><input type="file" class="text" name="file"/></td>
+						<td><input id="imgFile" type="file" class="text" name="file" onchange="xianshi()"/></td>
+					</tr>
+					<tr id="imgtr" style="display: none;">
+						<td class="field">图片缩略图：</td>
+						<td>
+							<img id="fileImg" alt="图片显示有误" style="width: 100px;height: 100px;"/>
+						</td>
 					</tr>
 					<tr>
 						<td class="field">商品价格：</td>
@@ -94,6 +100,10 @@
 					<tr>
 						<td class="field">条码号：</td>
 						<td><input type="text" class="text" name="product.ep_bar_code" /></td>
+					</tr>
+					<tr>
+						<td class="field">描述：</td>
+						<td><textarea name="product.ep_description"></textarea> </td>
 					</tr>
 					<tr>
 						<td></td>

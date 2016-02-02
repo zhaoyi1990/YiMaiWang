@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,13 +19,13 @@
 			<li><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
-			<li class="current"><a href="news.html">新闻</a></li>
+			<li class="current"><a href="news.jsp">新闻</a></li>
 		</ul>
 	</div>
 </div>
 <div id="childNav">
 	<div class="welcome wrap">
-		管理员pillys您好，今天是2012-12-21，欢迎回到管理后台。
+		管理员${sessionScope.user.eu_name}您好，今天是<s:date name="#request.today" format="yyyy-MM-dd"/>，欢迎回到管理后台。
 	</div>
 </div>
 <div id="position" class="wrap">
@@ -35,7 +36,7 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
+				<dd><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
 				<dd><em><a href="productClass_add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
 				<dd><em><a href="product_add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
@@ -44,7 +45,7 @@
 				<dt>留言管理</dt>
 				<dd><a href="guestbook.html">留言管理</a></dd>
 				<dt>新闻管理</dt>
-				<dd><em><a href="news-add.html">新增</a></em><a href="news.html">新闻管理</a></dd>
+				<dd><em><a href="news-add.jsp">新增</a></em><a href="news.jsp">新闻管理</a></dd>
 			</dl>
 		</div>
 	</div>
@@ -57,16 +58,13 @@
 					<th>新闻标题</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td>高老庄地震了</td>
-					<td class="w1 c"><a href="news-modify.html">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td>高老庄地震了</td>
-					<td class="w1 c"><a href="news-modify.html">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
+				<s:iterator value="list">
+					<tr>
+						<td class="first w4 c">${en_id}</td>
+						<td>${en_title}</td>
+						<td class="w1 c"><a href="news_modify.jsp?news.en_id=${en_id}">修改</a> <a href="news_delete.jsp?news.en_id=${en_id}">删除</a></td>
+					</tr>
+				</s:iterator>
 			</table>
 		</div>
 	</div>

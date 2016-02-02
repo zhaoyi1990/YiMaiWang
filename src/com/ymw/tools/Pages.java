@@ -11,7 +11,7 @@ public class Pages {
 
 	public Pages(String tableName, Integer pageRow) {
 		super();
-		this.totalRow = queryTotalRow(tableName);
+		this.totalRow = queryTotalRow(tableName,null);
 		this.pageRow = pageRow;
 		this.pageCount = totalRow % pageRow == 0 ? totalRow / pageRow : totalRow / pageRow + 1;
 	}
@@ -35,7 +35,7 @@ public class Pages {
 	
 	public void setCurrentPage(Integer currentPage) {
 		//设定页数必须在1到pageCount之间
-		if (currentPage == null) { //空值为1
+		if (currentPage == null||currentPage<1) { //空值为1
 			this.currentPage = 1;  
 		} else if (currentPage > this.pageCount) { //超过则取最大页数
 			this.currentPage = this.pageCount;
@@ -55,14 +55,22 @@ public class Pages {
 	}
 
 	/** 查询总行数*/ 
-	private Integer queryTotalRow(String tableName) {
+	private Integer queryTotalRow(String tableName,String where) {
 		String sql = "select count(*) from `" + tableName + "`";
+		if(where!=null){
+			sql += " where "+where;
+		}
 		Object[] obj = new BaseDao().queryObject(sql);
 		if (obj.length == 1) {
 			return ((Long) obj[0]).intValue();
 		} else {
 			return 0;
 		}
+	}
+	
+	public void newPages(String tableName,String where){
+		totalRow = queryTotalRow(tableName, where);
+		pageCount = totalRow % pageRow == 0 ? totalRow / pageRow : totalRow / pageRow + 1;
 	}
 
 	/** 上一页*/ 

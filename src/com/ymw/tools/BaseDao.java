@@ -156,11 +156,12 @@ public class BaseDao {
 				e.printStackTrace();
 			}
 		}
-		for (Field f : fs) {
-			sql.append("`"+f.getName() + "`=? and ");
+		for(int i =0;i<fs.size();i++){
+			sql.append("`"+fs.get(i).getName() + "`=?");
+			if(i<fs.size()-1){
+				sql.append(" and ");
+			}
 		}
-		sql.delete(sql.length() - 5, sql.length());
-		System.out.println(sql);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -187,8 +188,9 @@ public class BaseDao {
 	}
 
 	/** 修改*/ 
-	public void update(Object object, String... where) {
+	public int update(Object object, String... where) {
 		Class<? extends Object> clazz = object.getClass();
+		int result=0;
 		// 写SQL语句
 		StringBuffer sql = new StringBuffer();
 		sql.append("update `" + clazz.getSimpleName() + "` set ");
@@ -222,9 +224,7 @@ public class BaseDao {
 				}
 				ps.setObject(i + 1, value);
 			}
-			if (ps.executeUpdate() > 0) {
-				System.out.println("修改成功");
-			}
+			result =ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -234,6 +234,7 @@ public class BaseDao {
 		} finally {
 			close(conn, ps, null);
 		}
+		return result;
 	}
 
 	/** 用类对象查询*/ 

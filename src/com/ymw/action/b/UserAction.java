@@ -25,7 +25,6 @@ public class UserAction extends RootAction {
 	private UserDao dao;
 	private Pages pages;
 	
-	
 	public UserAction() {
 		list = new ArrayList<Easybuy_user>();
 		dao = new UserDao();
@@ -36,31 +35,24 @@ public class UserAction extends RootAction {
 	public Integer getYear() {
 		return year;
 	}
-
 	public Integer getMonth() {
 		return month;
 	}
-
 	public Integer getDay() {
 		return day;
 	}
-
 	public Integer getMax() {
 		return max;
 	}
-
 	public void setYear(Integer year) {
 		this.year = year;
 	}
-
 	public void setMonth(Integer month) {
 		this.month = month;
 	}
-
 	public void setDay(Integer day) {
 		this.day = day;
 	}
-
 	public void setMax(Integer max) {
 		this.max = max;
 	}
@@ -68,26 +60,22 @@ public class UserAction extends RootAction {
 	public Easybuy_user getUser() {
 		return user;
 	}
-
-	public void setUser(Easybuy_user user) {
-		this.user = user;
-	}
-
 	public List<Easybuy_user> getList() {
 		return list;
 	}
-
-	public void setList(List<Easybuy_user> list) {
-		this.list = list;
-	}
-
 	public Pages getPages() {
 		return pages;
 	}
-
+	public void setUser(Easybuy_user user) {
+		this.user = user;
+	}
+	public void setList(List<Easybuy_user> list) {
+		this.list = list;
+	}
 	public void setPages(Pages pages) {
 		this.pages = pages;
 	}
+
 
 	//========================================上面是注入方法====下面是应用方法===============================================//
 
@@ -139,14 +127,18 @@ public class UserAction extends RootAction {
 		}
 		user.setEu_birthday(date);
 		user.setEu_status(1);
-		dao.update(user);
+		if(dao.update(user)>0){
+			System.out.println("修改用户成功");
+		}
 		return execute();
 	}
 	
 	//删除用户资料
 	public String delete() {
-		dao.delete(user.getEu_user_id());
-		pages.delete();
+		if(dao.delete(user)>0){
+			System.out.println("删除用户成功");
+			pages.delete();
+		}
 		return execute();
 	}
 }

@@ -53,3 +53,15 @@ function clist(obj){
 		})
 	},"json")
 }
+
+function xianshi(){
+	var docObj=document.getElementById("imgFile"); 
+	var imgObjPreview=document.getElementById("fileImg"); 
+	if(docObj.files && docObj.files[0]){ 
+		document.getElementById("imgtr").style.display = "";
+		imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]); 
+	}else{ 
+		document.getElementById("imgtr").style.display = "none";
+	} 
+
+}

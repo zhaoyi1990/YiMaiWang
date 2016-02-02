@@ -1,7 +1,6 @@
 package com.ymw.dao;
 
 import java.util.List;
-
 import com.ymw.model.Easybuy_product_category;
 import com.ymw.tools.BaseDao;
 
@@ -28,14 +27,16 @@ public class ProductCategoryDao {
 		}
 	}
 
-	/** 修改一个类别的数据*/
-	public void update(Easybuy_product_category epc) {
-		dao.update(epc, "`epc_id`="+epc.getEpc_id());
+	/** 修改一个类别的数据
+	 * @return */
+	public int update(Easybuy_product_category epc) {
+		return dao.update(epc, "`epc_id`="+epc.getEpc_id());
 	}
 
-	/**删除符合对象属性的类别*/
-	public void delete(Easybuy_product_category epc) {
-		dao.delete(epc);
+	/**删除符合对象属性的类别
+	 * @return */
+	public int delete(Easybuy_product_category epc) {
+		return dao.delete(epc);
 	}
 	
 }

@@ -36,17 +36,21 @@ public class ProductAction extends RootAction {
 	private Pages pages;
 	
 	private Integer pid;
+	private Integer cid;
+	private String listName;
 	
 	private ProductCategoryDao pcdao;
 	private ProductDao dao;
 	
 	private File file;
+	@SuppressWarnings("unused")
 	private String fileFileName;
+	@SuppressWarnings("unused")
 	private String fileContentType;
 	
 		
 	public ProductAction() {
-		pages = new Pages("Easybuy_product", 10);
+		pages = new Pages("Easybuy_product", 5);
 		pcdao = new ProductCategoryDao();
 		dao = new ProductDao();
 	}
@@ -69,6 +73,13 @@ public class ProductAction extends RootAction {
 	public Integer getPid() {
 		return pid;
 	}
+	public Integer getCid() {
+		return cid;
+	}
+	public String getListName(){
+		return listName;
+	}
+	
 	//用于分页注入
 	public void setPages(Pages pages) {
 		this.pages = pages;
@@ -78,6 +89,9 @@ public class ProductAction extends RootAction {
 	}
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+	public void setCid(Integer cid) {
+		this.cid = cid;
 	}
 
 	//文件注入 
@@ -92,11 +106,32 @@ public class ProductAction extends RootAction {
 	}
 	
 	//========================================上面是注入方法====下面是应用方法===============================================//
+
 	@Override
 	public String execute() {
-		pages.setCurrentPage(pages.getCurrentPage());
-		list = dao.query(pages);
 		plist = pcdao.query(0);
+		pages.setCurrentPage(pages.getCurrentPage());
+		if(cid!=null){ 					//当有选中二级分类时生成此类别的列表
+			clist = pcdao.query(pid); 	//二级分类对象列表
+			
+			pages.newPages("Easybuy_product", "epc_child_id="+cid); //生成新的分页对象 下同
+			pages.setCurrentPage(pages.getCurrentPage()); 			//防止当前页超出新分页 重置当前页 下同
+			
+			list = dao.query(pages, "epc_child_id="+cid);
+			listName = pcdao.queryById(cid).getEpc_name();
+			
+		}else if(pid!=null&&pid>0){		//当有选中一级分类时生成此类别的列表
+			clist = pcdao.query(pid);	//一级级分类对象列表
+			
+			pages.newPages("Easybuy_product", "epc_id="+pid);
+			pages.setCurrentPage(pages.getCurrentPage());
+			
+			list = dao.query(pages,"epc_id="+pid);
+			listName = pcdao.queryById(pid).getEpc_name();
+		}else{
+			list = dao.query(pages);	//默认全部列表
+			listName="全部商品";
+		}
 		
 		return Action.SUCCESS;
 	}
@@ -111,7 +146,32 @@ public class ProductAction extends RootAction {
 	public String insert(){
 		product.setEp_file_name(upload());
 		if(dao.add(product)>0){
-			System.out.println("插入成功");
+			System.out.println("添加商品成功");
+		}
+		return execute();
+	}
+	
+	// 删除商品数据
+	public String delete(){
+		if(dao.delete(product)>0){
+			pages.delete();
+			System.out.println("删除商品成功");
+		}
+		return execute();
+	}
+	
+	// 添加商品页面默认数据
+	public String modify(){
+		product = dao.queryById(product.getEp_id());
+		plist = pcdao.query(0);
+		clist =	pcdao.query(product.getEpc_id());
+		return "modify";
+	}
+	
+	public String update(){
+		product.setEp_file_name(upload());
+		if(dao.update(product)>0){
+			System.out.println("修改商品成功");
 		}
 		return execute();
 	}

@@ -8,6 +8,8 @@ import java.util.Map;
 import com.opensymphony.xwork2.Action;
 import com.ymw.action.RootAction;
 import com.ymw.dao.ProductCategoryDao;
+import com.ymw.dao.ProductDao;
+import com.ymw.model.Easybuy_product;
 import com.ymw.model.Easybuy_product_category;
 
 public class ProductCategoryAction extends RootAction {
@@ -76,7 +78,7 @@ public class ProductCategoryAction extends RootAction {
 	//添加新类别
 	public String insert() {
 		if(dao.add(epc)>0){
-			System.out.println("添加成功");
+			System.out.println("添加类别成功");
 		}
 		return execute();
 	}
@@ -90,16 +92,32 @@ public class ProductCategoryAction extends RootAction {
 	
 	//修改类别
 	public String update(){
-		dao.update(epc);
+		if(dao.update(epc)>0){
+			System.out.println("修改类别成功");
+		}
 		return execute();
 	}
 	
 	//删除类别
 	public String delete(){
-		//删除选定的类别
-		dao.delete(epc);
-		//删除这个类别的子类
-		dao.delete(new Easybuy_product_category(epc.getEpc_id()));
+		if(dao.delete(epc)>0){
+			System.out.println("删除类别成功");
+		}
+		if(dao.delete(new Easybuy_product_category(epc.getEpc_id()))>0){
+			System.out.println("删除子类别成功");
+		}
+		//删除分类同时删除商品
+		ProductDao pdao = new ProductDao();
+		Easybuy_product product = new Easybuy_product();
+		product.setEpc_id(epc.getEpc_id());
+		if(pdao.delete(product)>0){
+			System.out.println("删除类别所有商品成功");
+		}
+		product = new Easybuy_product();
+		product.setEpc_child_id(epc.getEpc_id());
+		if(pdao.delete(product)>0){
+			System.out.println("删除类别所有商品成功");
+		}
 		return execute();
 	}
 }
