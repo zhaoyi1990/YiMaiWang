@@ -4,14 +4,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>易买网 - 首页</title>
+<title>易买网 - 登录页</title>
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <script type="text/javascript" src="scripts/function.js"></script>
 </head>
 <body>
 <div id="header" class="wrap">
 	<div id="logo"><img src="images/logo.gif" /></div>
-	<div class="help"><a href="#" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="register.jsp">注册</a><a href="guestbook.html">留言</a></div>
+	<div class="help"><a href="#" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="user-register.jsp">注册</a><a href="guestbook.html">留言</a></div>
 	<div class="navbar">
 		<ul class="clearfix">
 			<li class="current"><a href="#">首页</a></li>
@@ -50,19 +50,19 @@
 		<em class="corner rt"></em>
 		<div class="box">
 			<h1>欢迎回到易买网</h1>
-			<form id="loginForm" method="post" action="loginAction.do" onsubmit="return checkForm(this)">
+			<form id="loginForm" method="post" action="user_login.do" onsubmit="return checkForm(this)">
 				<table>
 					<tr>
 						<td class="field">用户名：</td>
-						<td><input class="text" type="text"  name="user.eu_user_name" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><span></span></td>
+						<td><input class="text" type="text"  name="user.eu_user_name" onfocus="FocusItem(this)" onblur="CheckItem(this)" /><span></span></td>
 					</tr>
 					<tr>
 						<td class="field">登录密码：</td>
-						<td><input class="text" type="password" id="passWord" name="user.eu_password" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><span></span></td>
+						<td><input class="text" type="password" id="passWord" name="user.eu_password" onfocus="FocusItem(this)" onblur="CheckItem(this)" /><span></span></td>
 					</tr>
 					<tr>
 						<td class="field">验证码：</td>
-						<td><input class="text verycode" type="text" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><img id="veryCode" src="" /><span></span></td>
+						<td><input class="text verycode" type="text" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this)" /><img id="veryCode" src="" /><span></span></td>
 					</tr>
 					<tr>
 						<td></td>

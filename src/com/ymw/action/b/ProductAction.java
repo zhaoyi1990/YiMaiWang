@@ -132,7 +132,7 @@ public class ProductAction extends RootAction {
 			list = dao.query(pages);	//默认全部列表
 			listName="全部商品";
 		}
-		
+
 		return Action.SUCCESS;
 	}
 	
@@ -238,5 +238,14 @@ public class ProductAction extends RootAction {
 			}
 		}
 		return fileName;
+	}
+	
+	public String product(){
+		Easybuy_product_category epc = pcdao.queryById(product.getEpc_id());
+		
+		epc.getEpc_name();
+		
+		return Action.SUCCESS;
+		
 	}
 }

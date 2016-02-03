@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,10 +11,25 @@
 <body>
 <div id="header" class="wrap">
 	<div id="logo"><img src="images/logo.gif" /></div>
-	<div class="help"><a href="#" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="register.jsp">注册</a><a href="guestbook.html">留言</a></div>
+	<div class="help">
+		<a href="#" class="shopping">购物车</a>
+		<!-- 用户权限功能  -->
+		<s:if test="#session.user!=null">
+			<s:if test="#session.user.eu_status==1">
+				<a href="user_modify.jsp">修改信息</a>
+			</s:if><s:else>
+				<a href="manage/index.jsp">返回后台</a>				
+			</s:else>
+			<a href="user_logout.jsp">账号登出</a>
+		</s:if><s:else>
+			<a href="login.jsp">登录</a>
+			<a href="user-register.jsp">注册</a>
+		</s:else>
+		<a href="guestbook.html">留言</a>
+	</div>
 	<div class="navbar">
 		<ul class="clearfix">
-			<li class="current"><a href="#">首页</a></li>
+			<li class="current"><a href="index.jsp">首页</a></li>
 			<li><a href="#">图书</a></li>
 			<li><a href="#">百货</a></li>
 			<li><a href="#">品牌</a></li>

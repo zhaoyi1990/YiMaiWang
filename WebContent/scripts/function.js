@@ -38,26 +38,46 @@ function CheckItem(obj) {
 		}
 		break;
 	case "user.eu_password":
-		if (obj.value == "") {
+		if (obj.value == ""&&obj.id!="newPassWord") {
 			msgBox.innerHTML = "密码不能为空";
 			msgBox.className = "error";
 			flag = false;
 		}
 		break;
 	case "rePassWord":
-		if (obj.value == "") {
-			msgBox.innerHTML = "确认密码不能为空";
-			msgBox.className = "error";
-			flag = false;
-		} else if (obj.value != document.getElementById("passWord").value) {
-			msgBox.innerHTML = "两次输入的密码不相同";
-			msgBox.className = "error";
-			flag = false;
+		var newPassWord = document.getElementById("newPassWord").value;
+		if(newPassWord==null){
+			if (obj.value == "") {
+				msgBox.innerHTML = "确认密码不能为空";
+				msgBox.className = "error";
+				flag = false;
+			} else if (obj.value != document.getElementById("passWord").value) {
+				msgBox.innerHTML = "两次输入的密码不相同";
+				msgBox.className = "error";
+				flag = false;
+			}		
+		}else{
+			if (obj.value == ""&&newPassWord!="") {
+				msgBox.innerHTML = "确认新密码不能为空";
+				msgBox.className = "error";
+				flag = false;
+			} else if (obj.value != newPassWord) {
+				msgBox.innerHTML = "两次输入的密码不相同";
+				msgBox.className = "error";
+				flag = false;
+			}
 		}
 		break;
 	case "veryCode":
 		if (obj.value == "") {
 			msgBox.innerHTML = "验证码不能为空";
+			msgBox.className = "error";
+			flag = false;
+		}
+		break;
+	case "oldpassword":
+		if(obj.value == "") {
+			msgBox.innerHTML = "原密码不能为空";
 			msgBox.className = "error";
 			flag = false;
 		}
@@ -70,14 +90,45 @@ function CheckItem(obj) {
 
 function checkForm(frm) {
 	var els = frm.getElementsByTagName("input");
+	var flag = true;
+	
+	//密码验证
+	var oldPassWord = document.getElementById("oldPassWord");
+	if(oldPassWord!=null){		
+		var msgBox = oldPassWord.parentNode.getElementsByTagName("span")[0];
+		if(oldPassWord.value!=""){
+			$.ajax({
+				url:"user_mmyz.do",
+				async : false, 
+				data:{password:oldPassWord.value},
+				type : "POST",
+				success : function(b){
+					if(b=="false"){
+						flag=false;
+						errorCount++;
+						msgBox.innerHTML = "密码错误，你还有"+(3-errorCount)+"次机会";
+						msgBox.className = "error";
+						if(errorCount>=3){
+							window.location.href="user_logout.do";
+						}
+					}
+				}
+			})
+		}else{
+			msgBox.innerHTML = "密码不能为空";
+			msgBox.className = "error";
+		}
+	}
+	//非空验证
 	for (var i = 0; i < els.length; i++) {
 		if (els[i].getAttribute("onblur") == "CheckItem(this)") {
 			if (!CheckItem(els[i])) {
-				return false;
+				flag = false;
+				break;
 			}
 		}
 	}
-	return true;
+	return flag;
 }
 
 function showChater() {

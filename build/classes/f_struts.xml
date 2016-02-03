@@ -4,15 +4,16 @@
 <struts>
 
 	<package name="f_struts" namespace="/" extends="struts-default">
-		<action name="loginAction" class="com.ymw.action.f.LoginAction">
+		<action name="index" class="com.ymw.action.f.IndexAction">
+			<result name="success">index.jsp</result>
+		</action>
+		
+		<action name="user_*" class="com.ymw.action.f.UserAction" method="{1}">
 			<result name="manage" type="redirect">manage/index.jsp</result>
 			<result name="success">index.jsp</result>
 			<result name="error">login.jsp</result>
-		</action>
-		
-		<action name="reg_*" class="com.ymw.action.f.RegAction" method="{1}">
-			<result name="success">reg-result.html</result>
-			<result name="error">register.jsp</result>
+			<result name="{1}-success">{1}-result.html</result>
+			<result name="{1}">user-{1}.jsp</result>
 		</action>
 
 		<action name="*">

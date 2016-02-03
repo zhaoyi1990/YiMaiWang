@@ -194,11 +194,25 @@ public class BaseDao {
 		// 写SQL语句
 		StringBuffer sql = new StringBuffer();
 		sql.append("update `" + clazz.getSimpleName() + "` set ");
+		
 		Field[] fields = clazz.getDeclaredFields();
-		for (int i = 0; i < fields.length; i++) {
-			sql.append("`"+fields[i].getName() + "`=?");
-			if (i < fields.length - 1) {
-				sql.append(',');
+		List<Field> fs = new ArrayList<Field>();
+		//剔除值为空的字段
+		for (Field f : fields) {
+			f.setAccessible(true);
+			try {
+				if (f.get(object) != null) {
+					fs.add(f);
+				}
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}for(int i =0;i<fs.size();i++){
+			sql.append("`"+fs.get(i).getName() + "`=?");
+			if(i<fs.size()-1){
+				sql.append(",");
 			}
 		}
 		// 写条件
@@ -216,9 +230,8 @@ public class BaseDao {
 		try {
 			conn = open();
 			ps = conn.prepareStatement(sql.toString());
-			for (int i = 0; i < fields.length; i++) {
-				fields[i].setAccessible(true);
-				Object value = fields[i].get(object);
+			for (int i = 0; i < fs.size(); i++) {
+				Object value = fs.get(i).get(object);
 				if (value instanceof java.util.Date) { //util.Date转成sql.Date
 					value = new java.sql.Date(((java.util.Date) value).getTime());
 				}
