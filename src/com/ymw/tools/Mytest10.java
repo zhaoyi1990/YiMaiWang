@@ -26,25 +26,26 @@ public class Mytest10 {
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         //在图片上画一个矩形当背景
         Graphics g = img.getGraphics();
-        g.setColor(new Color(r(50,250),r(50,250),r(50,250)));
+        g.setColor(new Color(r(150,250),r(150,250),r(150,250)));
         g.fillRect(0, 0, w, h);
          
         String str = "aqzxswedcfrvgtbhyujklp23456789";
         for(int i=0;i<4;i++){
-            g.setColor(new Color(r(50,180),r(50,180),r(50,180)));
+            g.setColor(new Color(r(0,149), r(0,149), r(0,149)));
             g.setFont(new Font("黑体",Font.PLAIN,40));
             char c = str.charAt(r(0,str.length()));
-            g.drawString(String.valueOf(c), 10+i*30, r(h-30,h));
+            g.drawString(String.valueOf(c), 10+i*30, r(h-20,h));
         }
          
         //画随机线
-        for(int i=0;i<25;i++){
+        for(int i=0;i<20;i++){
             g.setColor(new Color(r(50,180),r(50,180),r(50,180)));
             g.drawLine(r(0,w), r(0,h),r(0,w), r(0,h));
         }
+        
         //把内存中创建的图像输出到文件中
-        File file =new File("vcode.png");
-        ImageIO.write(img, "png", file);
+        File file =new File("vcode.jpg");
+        ImageIO.write(img, "jpg", file);
         System.out.println("图片输出完成");
          
     }

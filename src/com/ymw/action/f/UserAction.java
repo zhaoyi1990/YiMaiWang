@@ -1,5 +1,6 @@
 package com.ymw.action.f;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -7,10 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
+
 import com.opensymphony.xwork2.Action;
 import com.ymw.action.RootAction;
 import com.ymw.dao.UserDao;
 import com.ymw.model.Easybuy_user;
+import com.ymw.tools.VCode;
 
 public class UserAction extends RootAction {
 
@@ -181,5 +185,32 @@ public class UserAction extends RootAction {
 		session.setAttribute("user", user);
 		
 		return "update-success";
+	}
+	
+	//验证码生成
+	public void createVCode() {
+		VCode vCode = new VCode();
+		session.setAttribute("code", vCode.getCode());
+		try {
+			ImageIO.write(vCode.getImg(), "jpg", response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void vCodeYZ(){
+		String code = (String)session.getAttribute("code");
+		String vCode = request.getParameter("vCode").toLowerCase();
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			out.print(code.equals(vCode));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
+			if(out!=null){
+				out.close();
+			}
+		}
 	}
 }

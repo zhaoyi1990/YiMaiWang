@@ -80,6 +80,7 @@ public class ProductCategoryAction extends RootAction {
 		if(dao.add(epc)>0){
 			System.out.println("添加类别成功");
 		}
+		resetApplication();
 		return execute();
 	}
 	
@@ -95,6 +96,7 @@ public class ProductCategoryAction extends RootAction {
 		if(dao.update(epc)>0){
 			System.out.println("修改类别成功");
 		}
+		resetApplication();
 		return execute();
 	}
 	
@@ -118,6 +120,11 @@ public class ProductCategoryAction extends RootAction {
 		if(pdao.delete(product)>0){
 			System.out.println("删除类别所有商品成功");
 		}
+		resetApplication();
 		return execute();
+	}
+	
+	private void resetApplication(){
+		application.removeAttribute("parentCategoryList");
 	}
 }

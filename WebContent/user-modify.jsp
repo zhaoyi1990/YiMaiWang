@@ -164,7 +164,7 @@ var errorCount = 0;
 					<tr>
 						<td class="field">验证码：</td>
 						<td><input class="text verycode" type="text" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this)" />
-						<img id="veryCode" src="" /><span></span></td>
+						<img id="veryCode" src="user_createVCode.do" onclick="updateVCode(this)"/><span></span></td>
 					</tr>
 					<tr>
 						<td></td>

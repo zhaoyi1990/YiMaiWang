@@ -73,6 +73,20 @@ function CheckItem(obj) {
 			msgBox.innerHTML = "验证码不能为空";
 			msgBox.className = "error";
 			flag = false;
+		}else{
+			$.ajax({
+				url:"user_vCodeYZ.do",
+				async :false, 
+				data:{vCode:obj.value},
+				type : "POST",
+				success : function(b){
+					if(b=="false"){
+						flag=false;
+						msgBox.innerHTML = "验证码错误";
+						msgBox.className = "error";
+					}
+				}
+			})
 		}
 		break;
 	case "oldpassword":
@@ -271,4 +285,11 @@ function setDay() {
 		option.innerHTML = i;
 		$("#day").append(option);
 	}
+}
+function updateVCode(obj){
+	obj.src="user_createVCode.do?time="+new Date().getTime();
+}
+function indexCategory(li){
+	$("#categoryUL li").removeClass();
+	li.parentNode.className="current";
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -7,18 +7,21 @@
 <title>易买网 - 登录页</title>
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <script type="text/javascript" src="scripts/function.js"></script>
+<script type="text/javascript" src="scripts/jquery.js"></script>
+
 </head>
 <body>
 <div id="header" class="wrap">
 	<div id="logo"><img src="images/logo.gif" /></div>
 	<div class="help"><a href="#" class="shopping">购物车</a><a href="login.jsp">登录</a><a href="user-register.jsp">注册</a><a href="guestbook.html">留言</a></div>
 	<div class="navbar">
-		<ul class="clearfix">
-			<li class="current"><a href="#">首页</a></li>
-			<li><a href="#">图书</a></li>
-			<li><a href="#">百货</a></li>
-			<li><a href="#">品牌</a></li>
-			<li><a href="#">促销</a></li>
+		<ul class="clearfix" id="categoryUL">
+			<li class="current"><a href="index.jsp" onmouseover="indexCategory(this)">首页</a></li>
+			<s:iterator value="#application.parentCategoryList">
+				<li><a href="#" onmouseover="indexCategory(this)">${epc_name}</a></li>
+			</s:iterator>
+			<li><a href="#" onmouseover="indexCategory(this)">品牌</a></li>
+			<li><a href="#" onmouseover="indexCategory(this)">促销</a></li>
 		</ul>
 	</div>
 </div>
@@ -62,12 +65,13 @@
 					</tr>
 					<tr>
 						<td class="field">验证码：</td>
-						<td><input class="text verycode" type="text" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this)" /><img id="veryCode" src="" /><span></span></td>
+						<td><input class="text verycode" type="text" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this)" />
+						<img id="veryCode" src="user_createVCode.do" onclick="updateVCode(this)"><span></span></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td><label class="ui-green"><input type="submit" name="submit" value="立即登录" /></label>  
-							<c:if test="${error!=null}"><font color="#CC0000">${error}</font></c:if>
+							<s:if test="%{error!=null}"><font color="#CC0000">${error}</font></s:if>
 						</td>
 					</tr>
 				</table>

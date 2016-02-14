@@ -10,7 +10,7 @@
 		
 		<action name="user_*" class="com.ymw.action.f.UserAction" method="{1}">
 			<result name="manage" type="redirect">manage/index.jsp</result>
-			<result name="success">index.jsp</result>
+			<result name="success" type="redirect">index.jsp</result>
 			<result name="error">login.jsp</result>
 			<result name="{1}-success">{1}-result.html</result>
 			<result name="{1}">user-{1}.jsp</result>

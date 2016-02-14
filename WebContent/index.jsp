@@ -7,6 +7,7 @@
 <title>易买网 - 首页</title>
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <script type="text/javascript" src="scripts/function.js"></script>
+<script type="text/javascript" src="scripts/jquery.js"></script>
 </head>
 <body>
 <div id="header" class="wrap">
@@ -28,12 +29,13 @@
 		<a href="guestbook.html">留言</a>
 	</div>
 	<div class="navbar">
-		<ul class="clearfix">
-			<li class="current"><a href="index.jsp">首页</a></li>
-			<li><a href="#">图书</a></li>
-			<li><a href="#">百货</a></li>
-			<li><a href="#">品牌</a></li>
-			<li><a href="#">促销</a></li>
+		<ul class="clearfix" id="categoryUL">
+			<li class="current"><a href="index.jsp" onmouseover="indexCategory(this)">首页</a></li>
+			<s:iterator value="parentCategoryList">
+				<li><a href="#" onmouseover="indexCategory(this)">${epc_name}</a></li>
+			</s:iterator>
+			<li><a href="#" onmouseover="indexCategory(this)">品牌</a></li>
+			<li><a href="#" onmouseover="indexCategory(this)">促销</a></li>
 		</ul>
 	</div>
 </div>
