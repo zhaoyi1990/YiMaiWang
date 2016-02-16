@@ -30,12 +30,12 @@
 	</div>
 	<div class="navbar">
 		<ul class="clearfix" id="categoryUL">
-			<li class="current"><a href="index.jsp" onmouseover="indexCategory(this)">首页</a></li>
-			<s:iterator value="parentCategoryList">
-				<li><a href="#" onmouseover="indexCategory(this)">${epc_name}</a></li>
+			<li class="current"><a href="index.jsp" >首页</a></li>
+			<s:iterator value="#application.parentCategoryList">
+				<li><a href="#">${epc_name}</a></li>
 			</s:iterator>
-			<li><a href="#" onmouseover="indexCategory(this)">品牌</a></li>
-			<li><a href="#" onmouseover="indexCategory(this)">促销</a></li>
+			<li><a href="#" >特价</a></li>
+			<li><a href="#" >热卖</a></li>
 		</ul>
 	</div>
 </div>
@@ -66,24 +66,14 @@
 		<div class="box">
 			<h2>商品分类</h2>
 			<dl>
-				<dt>图书音像</dt>
-				<dd><a href="product-list.html">图书</a></dd>
-				<dd><a href="product-list.html">音乐</a></dd>
-				<dt>百货</dt>
-				<dd><a href="product-list.html">运动健康</a></dd>
-				<dd><a href="product-list.html">服装</a></dd>
-				<dd><a href="product-list.html">家居</a></dd>
-				<dd><a href="product-list.html">美妆</a></dd>
-				<dd><a href="product-list.html">母婴</a></dd>
-				<dd><a href="product-list.html">食品</a></dd>
-				<dd><a href="product-list.html">手机数码</a></dd>
-				<dd><a href="product-list.html">家具首饰</a></dd>
-				<dd><a href="product-list.html">手表饰品</a></dd>
-				<dd><a href="product-list.html">鞋包</a></dd>
-				<dd><a href="product-list.html">家电</a></dd>
-				<dd><a href="product-list.html">电脑办公</a></dd>
-				<dd><a href="product-list.html">玩具文具</a></dd>
-				<dd><a href="product-list.html">汽车用品</a></dd>
+				<s:iterator value="#application.childCategorylist" var="map" status="status">
+					<dt onclick="leftList(this)">${map['name']}</dt>
+					<div id="${map['name']}" style="display: none;">
+						<s:iterator value="#map['list']">
+							<dd><a href="product-list.html">${epc_name}</a></dd>
+						</s:iterator>
+					</div>
+				</s:iterator>
 			</dl>
 		</div>
 		<div class="spacer"></div>
@@ -176,13 +166,9 @@
 			<div class="news-list">
 				<h4>新闻动态</h4>
 				<ul>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
-					<li><a href="news-view.html" target="_blank">抢钱啦</a></li>
+				<s:iterator value="enlist">
+					<li><a href="news-view.html" target="_blank">${en_name}</a></li>
+				</s:iterator>
 				</ul>
 			</div>
 		</div>

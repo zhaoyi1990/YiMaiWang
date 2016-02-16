@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.ymw.dao.ProductCategoryDao;
 
 @SuppressWarnings("serial")
 public class RootAction extends ActionSupport{

@@ -293,3 +293,7 @@ function indexCategory(li){
 	$("#categoryUL li").removeClass();
 	li.parentNode.className="current";
 }
+
+function leftList(obj){
+	$("#"+obj.innerHTML).toggle();
+}
